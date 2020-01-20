@@ -1,0 +1,11 @@
+,follower_nbr,followee_nbr,tweets_nbr,avg_length_tweets,language,user_name
+0,1,-1,1,1,d,v
+1,1,-1,1,1,d,v
+2,-1,1,-1,-1,d,v
+3,1,-1,1,1,d,v
+4,-1,1,-1,-1,d,v
+5,-1,1,-1,-1,d,v
+6,1,-1,1,1,d,v
+7,-1,1,-1,-1,d,v
+8,-1,1,-1,1,d,v
+9,-1,1,-1,1,d,v
