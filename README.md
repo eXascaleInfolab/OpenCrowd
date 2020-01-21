@@ -9,7 +9,7 @@ https://www.python.org/downloads/
 ``` bash 
 $ pip3 install pandas keras sklearn tensorflow
 ```
-To be able to run the script in the scripts folder, you need to grant the file execution permissions
+To run the example script provided (in the scripts folder), you need to grant the file execution permissions
 
 ``` bash 
 $ chmod u+x simple_example.sh
