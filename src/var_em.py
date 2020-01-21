@@ -209,8 +209,8 @@ def var_em(nn_em_in,n_infls_unlabel, n_infls_label,aij_s,new_order, n_workers, s
         eval_model_test = accuracy_score(y_test, np.where(theta_i_test > 0.5, 1, 0))
         eval_model_val = accuracy_score(y_val, np.where(theta_i_val > 0.5, 1, 0))
         if steps_it0 % 10 == 0:
-            print "epoch", steps_it0, " convergence:", LA.norm(theta_i - old_theta_i), \
-                "val", eval_model_val, "test", eval_model_test
+            print("epoch", steps_it0, " convergence:", LA.norm(theta_i - old_theta_i), \
+                "val", eval_model_val, "test", eval_model_test)
         steps_it0 += 1
 
     weights = classifier.get_weights()
@@ -248,7 +248,7 @@ def var_em(nn_em_in,n_infls_unlabel, n_infls_label,aij_s,new_order, n_workers, s
              str(scores_test_theta[1][0]) + ',' + str(scores_test_theta[1][1]) + ',' + str(
         scores_val_theta[2][0]) + ',' + str(scores_val_theta[2][1]) + ',' + \
              str(scores_test_theta[2][0]) + ',' + str(scores_test_theta[2][1])
-    print scores
+    print(scores)
     with open(evaluation_file, 'a') as file:
         file.write("supervision rate," + str(supervision_rate))
         file.write('\n')
@@ -299,7 +299,7 @@ def var_em(nn_em_in,n_infls_unlabel, n_infls_label,aij_s,new_order, n_workers, s
         scores_val_theta = precision_recall_fscore_support(y_val, np.where(theta_i[strat_val:end_val] > 0.5, 1, 0),labels=[0,1])
         scores_test_theta = precision_recall_fscore_support(y_test, np.where(theta_i[end_val:] > 0.5, 1, 0),labels=[0,1])
 
-        print "\n\n"
+        print("\n\n")
         scores= str(em_step)+','+ str(eval_model_val) +','+str(eval_model_test)+','+str(auc_val) +','+ str(auc_test)+','+\
                 str(auprc_val)+','+str(auprc_test)+','+str(scores_val[0][0])+','+str(scores_val[0][1])+','+ \
                 str(scores_test[0][0])+','+str(scores_test[0][1])+','+str(scores_val[1][0])+','+str(scores_val[1][1])+','+\
@@ -310,7 +310,7 @@ def var_em(nn_em_in,n_infls_unlabel, n_infls_label,aij_s,new_order, n_workers, s
                 str(scores_test_theta[0][0])+','+str(scores_test_theta[0][1])+','+str(scores_val_theta[1][0])+','+str(scores_val_theta[1][1])+','+\
                 str(scores_test_theta[1][0])+','+str(scores_test_theta[1][1])+','+str(scores_val_theta[2][0])+','+ str(scores_val_theta[2][1])+','+ \
                 str(scores_test_theta[2][0])+','+str(scores_test_theta[2][1])
-        print scores
+        print(scores)
         with open(evaluation_file, 'a') as file:
             file.write(scores)
             file.write('\n')
@@ -432,14 +432,14 @@ if __name__ == '__main__':
     influencer_unlabeled = pd.read_csv(influencer_file_unlabeled, sep=",").drop(['language', 'user_name'], axis=1)
 
     column_names = np.array(influencer_labeled.columns).reshape((influencer_labeled.shape[1], 1))
-    print column_names.shape
+    print(column_names.shape)
     annotation_matrix = np.loadtxt(annotation_file, delimiter=',')
     labels = pd.read_csv(labels_file, sep=",")
 
     social_features_labeled = preprocessing.scale(influencer_labeled.values[:, 1:])
     true_labels_pr = labels[['label']].values
 
-    print influencer_labeled.values[:, [0]].shape,social_features_labeled.shape,true_labels_pr.shape
+    print (influencer_labeled.values[:, [0]].shape,social_features_labeled.shape,true_labels_pr.shape)
 
     social_features_labeled = np.concatenate(
         (influencer_labeled.values[:, [0]], social_features_labeled, true_labels_pr), axis=1)
@@ -498,10 +498,10 @@ if __name__ == '__main__':
         infl_aij = annotation_matrix[annotation_matrix[:, 1] == infl_idx]
         percentage_train += np.sum(infl_aij[:, 2])
 
-    print "% of ones in the training=", (percentage_train * 100) / aij_s.shape[0]
+    print("% of ones in the training=", (percentage_train * 100) / aij_s.shape[0])
 
-    print np.sum(aij_s[:, 2]), aij_s.shape[0]
-    print "% of ones in the matrix=", (np.sum(aij_s[:, 2]) * 100) / aij_s.shape[0]
+    print(np.sum(aij_s[:, 2]), aij_s.shape[0])
+    print("% of ones in the matrix=", (np.sum(aij_s[:, 2]) * 100) / aij_s.shape[0])
 
 
     with open(evaluation_file, 'a') as file:
@@ -514,7 +514,7 @@ if __name__ == '__main__':
         file.write("nb neurons," + str(n_neurons))
         file.write('\n')
     nn_em_in = nn_em()
-    print social_features_labeled.shape, social_features_unlabeled.shape, true_labels.shape
+    print (social_features_labeled.shape, social_features_unlabeled.shape, true_labels.shape)
 
     social_features_labeled = social_features_labeled[:,1:]
     social_features_unlabeled = social_features_unlabeled[:, 1:]

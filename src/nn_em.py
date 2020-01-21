@@ -32,16 +32,16 @@ class nn_em:
         classifier = Sequential()
         if hidden == True:
             # First Hidden Layer
-            layer0 = Dense(n_neurons, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.01, seed=98765), input_dim=m)
+            layer0 = Dense(n_neurons, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.03, seed=98765), input_dim=m)
             classifier.add(layer0)
             nb = 1
             while (nb < nb_hidden_layer):
-                layer_nb = Dense(n_neurons, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.01, seed=98765))
+                layer_nb = Dense(n_neurons, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.03, seed=98765))
                 classifier.add(layer_nb)
                 nb += 1
         # Output Layer
-        layer1 = Dense(1, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.01, seed=98765), \
-                       kernel_regularizer=regularizers.l2(1e-2))
+        layer1 = Dense(1, activation='sigmoid', kernel_initializer=initializers.random_normal(stddev=0.03, seed=98765), \
+                       kernel_regularizer=regularizers.l2(0.5))
         classifier.add(layer1)
         # Compiling the neural network
         sgd = optimizers.SGD(lr=learning_rate, clipvalue=0.5)
@@ -52,9 +52,9 @@ class nn_em:
         classifier.fit(X_train, y_train, epochs=steps, verbose=0)
         theta_i = classifier.predict(X_test)
         loss_and_metrics = classifier.evaluate(X_test, y_test)
-        print theta_i[1:10]
+        print(theta_i[1:10])
         eval_model = accuracy_score(y_test, np.where(theta_i > 0.5, 1, 0))
-        print "eval model",eval_model
+        print("eval model",eval_model)
         weights = classifier.get_weights()
         return theta_i, eval_model,loss_and_metrics, weights[0]
 
@@ -84,16 +84,16 @@ class nn_em:
             old_theta_i = theta_i.copy()
             theta_i, weights, classifier = self.nn_pzi_test_val(classifier, social_features, prob_e_step, steps)
             end_val = strat_val + y_val.shape[0]
-            theta_i_test = theta_i[strat_val:end_val]
-            theta_i_val = theta_i[end_val:]
+            theta_i_test = theta_i[strat_val:(end_val+1)]
+            theta_i_val = theta_i[(end_val+1):]
             eval_model_test = accuracy_score(y_test, np.where(theta_i_test > 0.5, 1, 0))
             eval_model_val = accuracy_score(y_val, np.where(theta_i_val > 0.5, 1, 0))
             if iter%10==0:
-                print "epoch", iter," convergence influencer:", LA.norm(theta_i - old_theta_i),"val", eval_model_val,\
-                    "test", eval_model_test
+                print ("epoch", iter," convergence influencer:", LA.norm(theta_i - old_theta_i),"val", eval_model_val,\
+                    "test", eval_model_test)
             iter +=1
-        print "epoch", iter, " convergence influencer:", LA.norm(theta_i - old_theta_i), "val", eval_model_val, \
-            "test", eval_model_test
+        print ("epoch", iter, " convergence influencer:", LA.norm(theta_i - old_theta_i), "val", eval_model_val, \
+            "test", eval_model_test)
         return theta_i,classifier, weights
 
     def train(self,classifier,social_features,true_labels, p_z_i_1, total_epochs, steps, size_train):
@@ -116,8 +116,8 @@ class nn_em:
         true_labels = labels[['label']].values
         X_train, X_test, y_train, y_test = train_test_split(social_features, true_labels, test_size = 0.2, random_state=45)
         n = social_features.shape[0]
-        print "n=",n
-        print "true_labels", true_labels.shape[0]
+        print("n=",n)
+        print ("true_labels", true_labels.shape[0])
         m = social_features.shape[1]
         # initi pzi
         p_z_i_0, p_z_i_1 = self.init_probabilities(n)
