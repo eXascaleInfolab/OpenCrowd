@@ -1,4 +1,5 @@
 # OpenCrowd
+Ines Arous, Jie Yang, Mourad Khayati, and Philippe Cudré-Mauroux. “OpenCrowd: A Human-AI Collaborative Approach for Finding Social Influencers via Open-Ended Answers Aggregation.” In Proceedings of the Web Conference (WWW 2020). Taipei, Taiwan, 2020.
 
 ### Installation
 This package requires python3. To install python3, please check the official python website
@@ -6,12 +7,12 @@ https://www.python.org/downloads/
 
 #### Python Libraries
 
-``` bash 
+``` bash
 $ pip3 install pandas keras sklearn tensorflow
 ```
 To run the example script provided (in the scripts folder), you need to grant the file execution permissions
 
-``` bash 
+``` bash
 $ chmod u+x simple_example.sh
 ```
 
