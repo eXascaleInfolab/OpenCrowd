@@ -84,8 +84,8 @@ class nn_em:
             old_theta_i = theta_i.copy()
             theta_i, weights, classifier = self.nn_pzi_test_val(classifier, social_features, prob_e_step, steps)
             end_val = strat_val + y_val.shape[0]
-            theta_i_val = theta_i[strat_val:(end_val+1)]
-            theta_i_test = theta_i[(end_val+1):]
+            theta_i_val = theta_i[:len(y_val)]
+            theta_i_test = theta_i[-len(y_test):]
             eval_model_test = accuracy_score(y_test, np.where(theta_i_test > 0.5, 1, 0))
             eval_model_val = accuracy_score(y_val, np.where(theta_i_val > 0.5, 1, 0))
             if iter%10==0:
